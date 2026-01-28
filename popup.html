@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+    }
+    .section {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    textarea {
+      height: 60px;
+      resize: vertical;
+    }
+    button {
+      padding: 8px 15px;
+      margin: 5px 5px 5px 0;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .start { background: #1da1f2; color: white; }
+    .stop { background: #e74c3c; color: white; }
+    .save { background: #27ae60; color: white; }
+    .status {
+      padding: 8px;
+      border-radius: 3px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .running { background: #d4edda; color: #155724; }
+    .stopped { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <div class="section">
+    <label>Hashtags (one per line):</label>
+    <textarea id="hashtags" placeholder="#example1&#10;#example2"></textarea>
+  </div>
+  
+  <div class="section">
+    <label>Delay between actions (seconds):</label>
+    <input type="number" id="delay" value="5" min="3" max="60">
+  </div>
+  
+  <div class="section">
+    <label>
+      <input type="checkbox" id="enableLikes" checked> Also like tweets
+    </label>
+  </div>
+  
+  <div class="section">
+    <button id="save" class="save">Save Settings</button>
+  </div>
+  
+  <div class="section">
+    <div id="status" class="status stopped">Stopped</div>
+  </div>
+  
+  <div class="section">
+    <button id="start" class="start">Start Auto-Repost</button>
+    <button id="stop" class="stop">Stop</button>
+  </div>
+  
+  <div class="section">
+    <small>Only works on X.com search results and must be logged in.</small><br>
+    <small>Developed by MeMo.</small>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

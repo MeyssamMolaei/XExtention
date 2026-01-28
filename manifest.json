@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "X Reposter",
+  "version": "1.0",
+  "description": "Local-only X.com reposting extension",
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "https://x.com/*",
+    "https://twitter.com/*"
+  ],
+  
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "X Reposter"
+  },
+  
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  
+  "web_accessible_resources": [
+    "popup.html"
+  ]
+}
