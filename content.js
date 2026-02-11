@@ -3,6 +3,7 @@ class XReposter {
   constructor() {
     this.isRunning = false;
     this.hashtags = [];
+    this.commentText = '';
     this.delay = 5000; // milliseconds
     this.enableLikes = true;
     this.processedTweets = new Set();
@@ -18,9 +19,12 @@ class XReposter {
 
   async init() {
     // Load settings from storage
-    const settings = await browser.storage.local.get(['hashtags', 'delay', 'enableLikes', 'isRunning']);
+    const settings = await browser.storage.local.get(['hashtags', 'commentText', 'delay', 'enableLikes', 'isRunning']);
     if (settings.hashtags) {
       this.hashtags = settings.hashtags.split('\n').filter(h => h.trim());
+    }
+    if (settings.commentText) {
+      this.commentText = settings.commentText;
     }
     if (settings.delay) {
       this.delay = settings.delay * 1000;
@@ -53,6 +57,7 @@ class XReposter {
         break;
       case 'updateSettings':
         this.hashtags = message.hashtags || [];
+        this.commentText = message.commentText || '';
         this.delay = (message.delay || 5) * 1000;
         this.enableLikes = message.enableLikes !== undefined ? message.enableLikes : true;
         break;
@@ -330,7 +335,9 @@ class XReposter {
       }
 
       // Create comment from hashtags
-      const comment = this.hashtags.join(' ');
+      const comment = this.commentText 
+        ? `${this.commentText} ${this.hashtags.join(' ')}`.trim()
+        : this.hashtags.join(' ');
       
       // Focus and clear
       textbox.focus();

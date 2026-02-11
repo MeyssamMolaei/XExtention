@@ -5,6 +5,7 @@ browser.runtime.onInstalled.addListener(() => {
   // Initialize default settings
   browser.storage.local.set({
     hashtags: '',
+    commentText: '',
     delay: 5,
     enableLikes: true,
     isRunning: false

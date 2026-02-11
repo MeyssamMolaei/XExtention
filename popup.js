@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const hashtagsInput = document.getElementById('hashtags');
+  const commentTextInput = document.getElementById('commentText');
   const delayInput = document.getElementById('delay');
   const enableLikesInput = document.getElementById('enableLikes');
   const statusDiv = document.getElementById('status');
@@ -8,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const saveBtn = document.getElementById('save');
 
   // Load saved settings
-  browser.storage.local.get(['hashtags', 'delay', 'enableLikes', 'isRunning']).then(result => {
+  browser.storage.local.get(['hashtags', 'commentText', 'delay', 'enableLikes', 'isRunning']).then(result => {
+    if (result.commentText) commentTextInput.value = result.commentText;
     if (result.hashtags) hashtagsInput.value = result.hashtags;
     if (result.delay) delayInput.value = result.delay;
     if (result.enableLikes !== undefined) enableLikesInput.checked = result.enableLikes;
@@ -18,11 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Save settings
   saveBtn.addEventListener('click', () => {
     const hashtags = hashtagsInput.value.trim();
+    const commentText = commentTextInput.value.trim();
     const delay = parseInt(delayInput.value);
     const enableLikes = enableLikesInput.checked;
     
     browser.storage.local.set({
       hashtags: hashtags,
+      commentText: commentText,
       delay: delay,
       enableLikes: enableLikes
     });
@@ -32,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
       browser.tabs.sendMessage(tabs[0].id, {
         action: 'updateSettings',
         hashtags: hashtags.split('\n').filter(h => h.trim()),
+        commentText: commentText,
         delay: delay,
         enableLikes: enableLikes
       });
